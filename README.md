@@ -1,3 +1,9 @@
+# ps2avrW
+
+This is my attempt at modifying the 356 mini's variant of ps2avrto create a simple firmware for DIY PS2 keyboards that supports FN layers. Original Readme below.
+
+
+
 # 356 Mini Firmware GUI
 
 GUI tool for generating keymappings and firmware for the 356 Mini keyboard
