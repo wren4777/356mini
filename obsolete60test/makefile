@@ -17,7 +17,7 @@ AVRLIB = ../avrlib
 
 ########### change this lines according to your project ##################
 #put the name of the target mcu here (at90s8515, at90s8535, attiny22, atmega603 etc.)
-	MCU = atmega32
+	MCU = atmega16a
 #	MCU = atmega161
 #	MCU = atmega128
 
