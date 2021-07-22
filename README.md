@@ -6,6 +6,10 @@ ps2avrW is a continuation of inornate's original ps2avr. It is based on the laye
 
 The Obsolete60 is a 60% PCB I am working on. It will be the test vehicle for ps2avrW.
 
+## AVR-Liberty
+
+Instead of the original avrlib, this experimental branch is trialling avr-liberty by dreamiurg. https://github.com/dreamiurg/avr-liberty
+
 ## Credits
 
 - inornate, for developing ps2avr and adapting it to the 356 mini,
