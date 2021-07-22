@@ -8,7 +8,7 @@ The Obsolete60 is a 60% PCB I am working on. It will be the test vehicle for ps2
 
 ## AVR-Liberty
 
-Instead of the original avrlib, this experimental branch is trialling avr-liberty. https://github.com/dreamiurg/avr-liberty
+Instead of the original avrlib, this experimental branch is trialling avr-liberty by dreamiurg. https://github.com/dreamiurg/avr-liberty
 
 ## Credits
 
