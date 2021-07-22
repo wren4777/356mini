@@ -17,7 +17,7 @@ AVRLIB = ../avrlib
 
 ########### change this lines according to your project ##################
 #put the name of the target mcu here (at90s8515, at90s8535, attiny22, atmega603 etc.)
-	MCU = atmega32
+	MCU = atmega16
 #	MCU = atmega161
 #	MCU = atmega128
 
@@ -55,7 +55,7 @@ AVRLIB = ../avrlib
 	ASFLAGS = -Wa, -gstabs
 
 #compiler flags
-	CPFLAGS	= -g -Os -Wall -Wstrict-prototypes -I$(AVRLIB) -Wa,-ahlms=$(<:.c=.lst)
+	CPFLAGS	= -g -Os -Wall -Wstrict-prototypes -I$(AVRLIB) -Wa,-ahlms=$(<:.c=.lst) -Wno-deprecated-declarations -D__PROG_TYPES_COMPAT__
 
 #linker flags
 	LDFLAGS = -Wl,-Map=$(TRG).map,--cref
@@ -97,4 +97,4 @@ $(TRG).o		: $(TRG).c						global.h
 keysta.o: keysta.h keysta.c
 
 prog: all
-	avrdude -p m32 -c stk500v2 -P com3 -U flash:w:keymain.hex:i
+	avrdude -p m32 -c stk500v2 -P com2 -U flash:w:keymain.hex:i

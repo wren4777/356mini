@@ -1,14 +1,19 @@
+#ifndef PRINT
+#define PRINT
+
+//#define DEBUG
+
 #ifdef DEBUG
 
 #include <stdio.h>
 #include <string.h>
+#include <avr/interrupt.h>
 
-#define BAUD 19200
+#define BAUD 57600
 #define UBRR (((F_CPU / (BAUD * 16UL))) - 1) 
 
 #define DEBUG_PRINT(arg) printf arg
 
-static FILE mystdout = FDEV_SETUP_STREAM(uart_putchar, NULL, _FDEV_SETUP_WRITE);
 static int
 uart_putchar(char c, FILE *stream)
 {
@@ -19,16 +24,18 @@ uart_putchar(char c, FILE *stream)
     return 0;
 }
 
+static FILE mystdout = FDEV_SETUP_STREAM(uart_putchar, NULL, _FDEV_SETUP_WRITE);
+
 #else
 #define DEBUG_PRINT(arg)
 #endif
 
 static void 
-enable_printf()
+enable_printf(void)
 {
 #ifdef DEBUG
 	stdout = &mystdout;
-	DDRD |= 0x01;
+	//DDRD |= 0x01;
 
 	UBRRH = (UBRR>>8);
 	UBRRL = UBRR;
@@ -38,4 +45,4 @@ enable_printf()
 #endif
 }
 
-
+#endif
