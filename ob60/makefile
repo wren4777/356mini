@@ -13,26 +13,38 @@
 # I've added some extra comments above several of the makefile fields which
 # you will have to deal with.
 
-AVRLIB = ../avrlib
+# location of the ps2avrW core files
 
-########### change this lines according to your project ##################
-#put the name of the target mcu here (at90s8515, at90s8535, attiny22, atmega603 etc.)
+	PS2AVR_DIR = ../core
+
+########### change these lines according to your project ##################
+#specify the target mcu here (at90s8515, at90s8535, attiny22, atmega603 etc.)
 	MCU = atmega16
 #	MCU = atmega161
 #	MCU = atmega128
+
+#specify the CPU clock speed here
+	F_CPU = 12000000        # 12MHz processor
+#	F_CPU = 16000000        # 16MHz processor
+#	F_CPU = 14745000        # 14.745MHz processor
+#	F_CPU = 8000000         # 8MHz processor
+#	F_CPU = 7372800         # 7.37MHz processor
+#	F_CPU = 1000000         # 1MHz processor
+#	F_CPU = 4000000         # 4MHz processor
+#	F_CPU = 3686400         # 3.69MHz processor
 
 #put the name of the target file here (without extension)
 #  Your "target" file is your C source file that is at the top level of your code.
 #  In other words, this is the file which contains your main() function.
 
-	TRG = keymain
+	TRG = obsolete60
 
-#put your C sourcefiles here 
+#put your C source files here
 #  Here you must list any C source files which are used by your target file.
 #  They will be compiled in the order you list them, so it's probably best
 #  to list $(TRG).c, your top-level target file, last.
 
-	SRC = $(AVRLIB)/timer.c keysta.c $(TRG).c
+	SRC = matrix.c $(TRG).c
 
 #put additional assembler source file here
 #  The ASRC line allows you to list files which contain assembly code/routines that
@@ -41,60 +53,10 @@ AVRLIB = ../avrlib
 
 	ASRC =
 
-#additional libraries and object files to link
-#  Libraries and object files are collections of functions which have already been
-#  compiled.  If you have such files, list them here, and you will be able to use
-#  use the functions they contain in your target program.
+# include the ps2avrW core
+VPATH += $(PS2AVR_DIR)
+include $(PS2AVR_DIR)/ps2avr.mk
 
-	LIB	=
-
-#additional includes to compile
-	INC	= 
-
-#assembler flags
-	ASFLAGS = -Wa, -gstabs
-
-#compiler flags
-	CPFLAGS	= -g -Os -Wall -Wstrict-prototypes -I$(AVRLIB) -Wa,-ahlms=$(<:.c=.lst) -Wno-deprecated-declarations -D__PROG_TYPES_COMPAT__
-
-#linker flags
-	LDFLAGS = -Wl,-Map=$(TRG).map,--cref
-#	LDFLAGS = -Wl,-Map=$(TRG).map,--cref -lm
-
-	
-########### you should not need to change the following line #############
-include $(AVRLIB)/make/avrproj_make
-		  
-###### dependecies, add any dependencies you need here ###################
-#  Dependencies tell the compiler which files in your code depend on which
-#  other files.  When you change a piece of code, the dependencies allow
-#  the compiler to intelligently figure out which files are affected and
-#  need to be recompiled.  You should only list the dependencies of *.o 
-#  files.  For example: uart.o is the compiled output of uart.c and uart.h
-#  and therefore, uart.o "depends" on uart.c and uart.h.  But the code in
-#  uart.c also uses information from global.h, so that file should be listed
-#  in the dependecies too.  That way, if you alter global.h, uart.o will be
-#  recompiled to take into account the changes.
-
-buffer.o		: buffer.c		buffer.h
-uart.o		: uart.c			uart.h		global.h
-uart2.o		: uart2.c		uart2.h		global.h
-rprintf.o	: rprintf.c		rprintf.h
-a2d.o			: a2d.c			a2d.h
-timer.o		: timer.c		timer.h		global.h
-pulse.o		: pulse.c		pulse.h		timer.h	global.h
-lcd.o			: lcd.c			lcd.h			global.h
-i2c.o			: i2c.c			i2c.h			global.h
-spi.o			: spi.c			spi.h			global.h
-swpwm.o		: swpwm.c		swpwm.h		global.h
-servo.o		: servo.c		servo.h		global.h
-swuart.o		: swuart.c		swuart.h		global.h
-tsip.o		: tsip.c			tsip.h		global.h
-nmea.o		: nmea.c			nmea.h		global.h
-vt100.o		: vt100.c		vt100.h		global.h
-gps.o			: gps.c			gps.h			global.h
-$(TRG).o		: $(TRG).c						global.h
-keysta.o: keysta.h keysta.c
-
+#TODO: generalise this
 prog: all
-	avrdude -p m32 -c stk500v2 -P com2 -U flash:w:keymain.hex:i
+	avrdude -p m32 -c stk500v2 -P com2 -U flash:w:$(TRG).hex:i

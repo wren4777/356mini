@@ -1,3 +1,11 @@
+# exclude jetbrains IDE stuff
+.idea/
+
+# ignore build artifacts
+*.bin
+*.eep
+*.hex
+*.lst
 *.o
 *.map
 *.elf
