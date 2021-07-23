@@ -15,24 +15,25 @@
 
 AVRLIB = ../avrlib
 
-########### change this lines according to your project ##################
-#put the name of the target mcu here (at90s8515, at90s8535, attiny22, atmega603 etc.)
-	MCU = atmega16
+########### Change this line according to your project. See the "Microcontroller" section in the documentation for more info. ##################
+#Put the name of the target mcu here (at90s8515, at90s8535, attiny22, atmega603 etc.)
+	MCU = atmega324a
 #	MCU = atmega161
 #	MCU = atmega128
 
-#put the name of the target file here (without extension)
+#  Put the name of the target file here (without extension)
 #  Your "target" file is your C source file that is at the top level of your code.
 #  In other words, this is the file which contains your main() function.
 
 	TRG = keymain
 
-#put your C sourcefiles here 
+#  Put your C sourcefiles here 
 #  Here you must list any C source files which are used by your target file.
 #  They will be compiled in the order you list them, so it's probably best
 #  to list $(TRG).c, your top-level target file, last.
 
-	SRC = $(AVRLIB)/timer.c keysta.c $(TRG).c
+	SRC = $(AVRLIB)/timerx8.c keysta.c $(TRG).c
+#	SRC = $(AVRLIB)/timer.c keysta.c $(TRG).c
 
 #put additional assembler source file here
 #  The ASRC line allows you to list files which contain assembly code/routines that
