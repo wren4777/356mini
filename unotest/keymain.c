@@ -6,7 +6,6 @@
 #include "timer.h"
 #include "keysta.h"
 #include "keymap.h"
-#include <../ob60/matrix.h>
 #include "print.h"
 
 
@@ -82,7 +81,7 @@ static uint8_t MATRIX[17];
 static uint8_t TYPEMATIC_DELAY=2;
 static long TYPEMATIC_REPEAT=5;
 
-unsigned char txScanCode = 0; // scancode being currently transmitted
+unsigned char txScanCode = 0; // scancode being urrently transmitted
 unsigned char m_state;
 unsigned char lastSent;
 unsigned char lastState;
@@ -330,7 +329,40 @@ void putKey(uint8_t keyidx, uint8_t isDown) {
 	}
 }
 
+// function that determine keymap
+uint8_t get_keymap(void) {
+	uint8_t col, row, keyidx, cur;
+	for(col=0;col<8;col++)
+		for(row=0;row<17;row++) {
+			keyidx = pgm_read_byte(&keymap_code[0][row][col]);
+			if(keyidx == KEY_FN) {
+				cur = 0;
+				DDRB  = BV(col);
+				PORTB = ~BV(col);
 
+				delay_us(1);
+
+				if(row<8)	{				// for 0..7, PORTA 0 -> 7
+					cur = (~PINB)&BV(row);
+				}
+//				else if(row>=8 && row<16) {	// for 8..15, PORTC 7 -> 0
+//					cur = (~PINC)&BV(15-row);
+//				}
+				else {						// for 16..18, PORTD 7 -> 5
+					cur = (~PINB)&BV(15-row);
+				}
+
+				if(cur)
+					return 1;
+			}
+		}
+	uint8_t keymap = ((~PIND)&0b01000000)>>6;
+
+	if(keymap)
+		return 1;
+	else
+		return 0;
+}
 
 // return : key modified
 int scankey(void) {
@@ -359,13 +391,13 @@ int scankey(void) {
 		for(row=0;row<17;row++)
 		{
 			if(row<8)	{				// for 0..7, PORTA 0 -> 7
-				cur = (~PINA)&BV(row);
+				cur = (~PINC)&BV(row);
 			}
-			else if(row>=8 && row<16) {	// for 8..15, PORTC 7 -> 0
-				cur = (~PINC)&BV(15-row);
-			}
+//			else if(row>=8 && row<16) {	// for 8..15, PORTC 7 -> 0
+//				cur = (~PIND)&BV(15-row);
+//			}
 			else {						// for 16..18, PORTD 7 -> 5
-				cur = (~PIND)&BV(23-row);
+				cur = (~PINB)&BV(15-row);
 			}
 
 			if(cur)
@@ -499,16 +531,16 @@ int main(void)
 
 	// signal direction : col -> row
 
-	DDRB 	= 0xFF;	// all outputs for cols
+//	DDRB 	= 0xFF;	// all outputs for cols
 	PORTB	= 0xFF;	// pull-up
 
-	DDRA	= 0x00;	// all inputs for rows
+//	DDRA	= 0x00;	// all inputs for rows
 	DDRC	= 0x00;
-	DDRD    = 0x00;
+//	DDRD    = 0x00;
 
-	PORTA	= 0xFF;	// all rows pull-up.
+//	PORTA	= 0xFF;	// all rows pull-up.
 	PORTC	= 0xFF;
-	PORTD	= 0xFF;
+//	PORTD	= 0xFF;
 
 
 	// initial LED pins and turn off all

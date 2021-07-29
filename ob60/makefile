@@ -19,7 +19,7 @@
 
 ########### change these lines according to your project ##################
 #specify the target mcu here (at90s8515, at90s8535, attiny22, atmega603 etc.)
-	MCU = atmega16
+	MCU = atmega324pa
 #	MCU = atmega161
 #	MCU = atmega128
 

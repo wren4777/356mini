@@ -1,4 +1,4 @@
-//ps2avrW keymap.h
+//ps2avrW Keymap.h
 //Created by inornate and jkomusin, updates and comments by wren4777
 
 #ifndef KEYMAP_H
@@ -11,7 +11,7 @@
 
 #define KEY_FN 255
 
-enum {						//This section is the complete list of keycodes the keyboard can send.
+enum {						//This is the complete list of keycodes the keyboard can send.
 	KEY_NONE=0,
 
 	KEY_HASH,
@@ -135,7 +135,7 @@ enum {						//This section is the complete list of keycodes the keyboard can sen
  	KEY_MINIMIZE,	KEY_EJECT
 };
 
-const uint8_t PROGMEM keycode_set2[NUM_KEY] =	{ 0x00,								//This section assigns a PS/2 scancode from IBM Set Two to the above keycodes.
+const uint8_t PROGMEM keycode_set2[NUM_KEY] =	{ 0x00,
  0x0E, 0x16, 0x1E, 0x26, 0x25, 0x2E, 0x36, 0x3D, 0x3E, 0x46, 0x45, 0x4E, 0x55, 0x66,// Hash1234...
  0x0D, 0x15, 0x1D, 0x24, 0x2D, 0x2C, 0x35, 0x3C, 0x43, 0x44, 0x4D, 0x54, 0x5B, 0x5D,// TabQWERT..
  0x58, 0x1C, 0x1B, 0x23, 0x2B, 0x34, 0x33, 0x3B, 0x42, 0x4B, 0x4C, 0x52, 0x5A,		// CapASDF..
@@ -197,6 +197,14 @@ const uint8_t PROGMEM keycode_set2_proc_shift[] =
 	KEY_NONE };
 
 
+const uint8_t PROGMEM keymap_code[1][1][1] =  { // First number is how many keymaps you have; second is the number of rows; third is the number of columns
+{
+		// set 0 : normal
+		 // COL0		COL1		COL2		COL3		COL4		COL5			COL6			COL7
+		{ KEY_B,		}		// ROW16
+	},
 
+
+ };
  
 #endif

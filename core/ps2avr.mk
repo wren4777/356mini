@@ -3,7 +3,7 @@
 	AVRLIB = ../avrlib
 
 #source files
-	SRC += keymain.c keysta.c timer.c
+	SRC += keymain.c keysta.c timerx8.c
 
 #assembler flags
 	ASFLAGS = -Wa, -gstabs
@@ -35,6 +35,6 @@ include $(AVRLIB)/make/avrproj_make
 #  in the dependecies too.  That way, if you alter global.h, uart.o will be
 #  recompiled to take into account the changes.
 
-keysta.o    : keysta.c      common_inc.h    global.h    keysta.h    timer.h
-keymain.o   : keymain.c     common_inc.h    global.h    keysta.h    timer.h     keymap.h
+keysta.o    : keysta.c      common_inc.h    global.h    keysta.h    timerx8.h
+keymain.o   : keymain.c     common_inc.h    global.h    keysta.h    timerx8.h     keymap.h
 $(TRG).o    : $(TRG).c      common_inc.h    global.h
